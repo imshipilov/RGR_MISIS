@@ -38,7 +38,7 @@ class FuzzyBinaryTree<T> {
 
     private void printTree(FuzzyNode<T> node, String prefix, boolean isTail) {
         if (node != null) {
-            System.out.println(prefix + (isTail ? "└── " : "└── ") + node.value);
+            System.out.println(prefix +  "└── " + node.value);
             printTree(node.left, prefix + (isTail ? "    " : "│   "), false);
             printTree(node.right, prefix + (isTail ? "    " : "│   "), true);
         }
