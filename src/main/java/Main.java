@@ -19,7 +19,7 @@ public class Main {
         boolean firstSection = true;
         int counter = 0;
         // Добавляем первые 7 узлов
-        try (Scanner scanner = new Scanner(new File("input2.txt"))) {
+        try (Scanner scanner = new Scanner(new File("input.txt"))) {
             System.out.println("Процесс дефаззификации:");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
@@ -86,71 +86,8 @@ public class Main {
             return;
         }
 
-        // Вывод дерева до добавления нового узла
-        System.out.println("\nДерево перед добавлением нового узла:");
+        // Вывод дерева
         tree.printTree();
         System.out.println();
-
-
-        /// Добавление узла ///
-
-        System.out.println("Процесс дефаззификации:");
-        // Чтение входных данных из файла
-        values.clear();
-        lambda1 = 0.0;
-        lambda2 = 0.0;
-
-        try (Scanner scanner = new Scanner(new File("input.txt"))) {
-            lambda1 = scanner.nextDouble();
-            lambda2 = scanner.nextDouble();
-            for (int l1 = (int) Math.ceil(lambda1); l1 < Math.round(lambda2) + 1; l1++) {
-                values.add(l1);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Входной файл не найден!");
-            return;
-        } catch (Exception e) {
-            System.out.println("Неверное значение!");
-            return;
-        }
-
-
-        membershipValues.clear();
-
-        // Получаем степень принадлежности для каждого нечеткого числа
-        for (int i = 0; i < values.size(); i++) {
-            int value = values.get(i);
-            GaussianMembershipFunction membershipFunction = new GaussianMembershipFunction(lambda1, lambda2);
-            double membershipValue = membershipFunction.calculateMembership(value);
-            membershipValues.add(membershipValue);
-        }
-
-        // Получаем чёткое число
-        clearNumber = 0;
-        membValueSum = 0;
-        for (int i = 0; i < values.size(); i++) {
-            int value = values.get(i);
-            Double membValue = membershipValues.get(i);
-            clearNumber += value * membValue;
-            membValueSum += membValue;
-        }
-        clearNumber = (int) Math.ceil(clearNumber / membValueSum); // Конечное четкое число
-
-        if (lambda1 >= lambda2) {
-            // λ1 должен быть меньше λ2
-            System.out.println("λ1 должно быть меньше, чем λ2!");
-            return;
-        } if (lambda1 < 0 || lambda2 < 0) {
-            System.out.println("λ1 и λ2 не могут быть отрицательными!");
-            return;
-        }
-        tree.add(clearNumber);
-
-        // Вывод дерева после добавления нового узла
-        System.out.println("\nДерево после добавления нового узла:");
-        tree.printTree();
-
-
     }
-
 }
